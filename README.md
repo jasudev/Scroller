@@ -10,6 +10,7 @@ You can animate in individual views based on scroll position. Developed with Swi
 
 ## Screenshot
 <img src="Markdown/Scroller.gif">
+<img src="Markdown/ScrollerExample.gif">
 
 ## Usages
 1. Scroller
@@ -28,8 +29,7 @@ You can animate in individual views based on scroll position. Developed with Swi
     }
     ```
 
-        
-3. Each view only needs to conform to the ScrollerContent protocol.
+2. Each view only needs to conform to the ScrollerContent protocol.
     ```swift
     struct ScrollerVContent: ScrollerContent {
     
@@ -49,6 +49,9 @@ You can animate in individual views based on scroll position. Developed with Swi
         }
     }
     ```
+    
+## Example
+[https://fabulaapp.page.link/222](https://fabulaapp.page.link/222)
 
 ## Contact
 instagram : [@dev.fabula](https://www.instagram.com/dev.fabula)  
