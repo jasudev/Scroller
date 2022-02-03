@@ -13,7 +13,7 @@ struct ContentView: View {
     
     @State private var selection: Int = 0
     @State private var valueH: CGFloat = 0
-    @State private var valueV: CGFloat = 0.5
+    @State private var valueV: CGFloat = 0
     
     var body: some View {
         TabView(selection: $selection) {
