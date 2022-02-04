@@ -10,7 +10,9 @@ You can animate in individual views based on scroll position. Developed with Swi
 
 ## Screenshot
 <img src="Markdown/Scroller.gif">
-<img src="Markdown/ScrollerExample.gif">
+|Vertical|Horizontal|
+|:---:|:---:|
+|<img src="Markdown/ScrollerVertical.gif">|<img src="Markdown/ScrollerHorizontal.gif">|
 
 ## Usages
 1. Scroller
