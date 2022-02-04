@@ -13,6 +13,9 @@ You can animate in individual views based on scroll position. Developed with Swi
 |:---:|:---:|:---:|
 |<img src="Markdown/Scroller.gif">|<img src="Markdown/ScrollerVertical.gif">|<img src="Markdown/ScrollerHorizontal.gif">|
 
+## Example
+[https://fabulaapp.page.link/222](https://fabulaapp.page.link/222)
+
 ## Usages
 1. Scroller
     ```swift
@@ -50,9 +53,6 @@ You can animate in individual views based on scroll position. Developed with Swi
         }
     }
     ```
-    
-## Example
-[https://fabulaapp.page.link/222](https://fabulaapp.page.link/222)
 
 ## Contact
 instagram : [@dev.fabula](https://www.instagram.com/dev.fabula)  
