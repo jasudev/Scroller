@@ -54,7 +54,14 @@ You can animate in individual views based on scroll position. Developed with Swi
         }
     }
     ```
+## Swift Package Manager
+The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler. Once you have your Swift package set up, adding Scroller as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 
+```swift
+dependencies: [
+    .package(url: "https://github.com/jasudev/Scroller.git", .branch("main"))
+]
+```
 ## Contact
 instagram : [@dev.fabula](https://www.instagram.com/dev.fabula)  
 email : [dev.fabula@gmail.com](mailto:dev.fabula@gmail.com)
