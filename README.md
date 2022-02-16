@@ -1,4 +1,4 @@
-# **Scroller**
+# **Scroller for SwiftUI**
 You can animate in individual views based on scroll position. Developed with SwiftUI. This library supports iOS/macOS.
 
 [![Platforms](https://img.shields.io/badge/Platforms-iOS%20%7C%20macOS-blue?style=flat-square)](https://developer.apple.com/macOS)
