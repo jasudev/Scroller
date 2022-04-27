@@ -26,17 +26,17 @@
 import SwiftUI
 
 struct LazyStack<Content>: View where Content: View {
-    
+
     /// The scroll view's scrollable axis. The default axis is the vertical axis.
     private var axes: Axis.Set = .vertical
-    
+
     /// The distance between adjacent subviews, or `nil` if you want the stack to choose a default
     /// distance for each pair of subviews.
-    private var spacing: CGFloat? = nil
-    
+    private var spacing: CGFloat?
+
     /// The view builder that creates the scrollable view, Pass a view that conforms to ScrollerContent.
     @ViewBuilder private var content: () -> Content
-    
+
     /// Initializes `LazyStack`
     ///
     /// - Parameters:
@@ -49,13 +49,13 @@ struct LazyStack<Content>: View where Content: View {
         self.spacing = spacing
         self.content = content
     }
-    
+
     var body: some View {
         if axes == .vertical {
             LazyVStack(alignment: .leading, spacing: spacing) {
                 content()
             }
-        }else {
+        } else {
             LazyHStack(alignment: .top, spacing: spacing) {
                 content()
             }

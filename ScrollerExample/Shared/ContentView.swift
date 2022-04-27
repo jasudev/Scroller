@@ -119,7 +119,7 @@ struct InfoView : View {
             Text("value: \(value)")
             if axes == .vertical {
                 Text("position Y: \(proxy.size.height * value)")
-            }else {
+            } else {
                 Text("position X: \(proxy.size.width * value)")
             }
         }
