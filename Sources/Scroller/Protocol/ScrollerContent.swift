@@ -26,7 +26,7 @@
 import SwiftUI
 
 public protocol ScrollerContent: View {
-    
+
     /// Bind each view's scroll-relative value. It is a value between 0 and 1.
     var value: CGFloat { get set }
 }

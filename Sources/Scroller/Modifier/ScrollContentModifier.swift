@@ -26,16 +26,16 @@
 import SwiftUI
 
 struct ScrollContentModifier: ViewModifier {
-    
+
     /// The scroll view's scrollable axis. The default axis is the vertical axis.
     private var axes: Axis.Set = .vertical
-    
+
     /// The size of the ScrollView.
     private let size: CGSize
-    
+
     /// Bind the full scroll relative value. It is a value between 0 and 1.
     @Binding private var value: CGFloat
-    
+
     /// Initializes `ScrollContentModifier`
     ///
     /// - Parameters:
@@ -45,9 +45,9 @@ struct ScrollContentModifier: ViewModifier {
     init(_ axes: Axis.Set, size: CGSize, value: Binding<CGFloat>) {
         self.axes = axes
         self.size = size
-        _value = value
+        self._value = value
     }
-    
+
     func body(content: Content) -> some View {
         content
             .coordinateSpace(name: "Scroller")
@@ -55,7 +55,7 @@ struct ScrollContentModifier: ViewModifier {
                 self.value = getValue(value)
             }
     }
-    
+
     /// Method that returns the size and offset of the content from ScrollView.
     ///
     /// - Parameters:
@@ -63,13 +63,11 @@ struct ScrollContentModifier: ViewModifier {
     private func getValue(_ contentValue: ContentValue) -> CGFloat {
         var value: CGFloat = 0
         if axes == .vertical {
-            value = (contentValue.offset.y / (contentValue.size.height - size.height)) * -1
-        }else {
-            value = (contentValue.offset.x / (contentValue.size.width - size.width)) * -1
+            value = -contentValue.offset.y / (contentValue.size.height - size.height)
+        } else {
+            value = -contentValue.offset.x / (contentValue.size.width - size.width)
         }
-        value = max(value, 0)
-        value = min(value, 1)
-        return value
+        return value.clamped(to: 0...1)
     }
 }
 
@@ -93,8 +91,11 @@ struct OffsetScrollView: View {
     let name: String = "Scroller"
     var body: some View {
         GeometryReader { proxy in
-            let offset = CGPoint(x: proxy.frame(in: .named(name)).minX, y: proxy.frame(in: .named(name)).minY)
-            Color.clear.preference(key: ScrollOffsetKey.self, value: ContentValue(offset: offset, size: proxy.size))
+            let offset = proxy.frame(in: .named(name)).origin
+            Color.clear.preference(
+                key: ScrollOffsetKey.self,
+                value: ContentValue(offset: offset, size: proxy.size)
+            )
         }
     }
 }

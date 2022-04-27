@@ -25,21 +25,27 @@
 
 import SwiftUI
 
+extension Comparable {
+    @inlinable @inline(__always)
+    public func clamped(to limits: ClosedRange<Self>) -> Self {
+        Swift.min(Swift.max(self, limits.lowerBound), limits.upperBound)
+    }
+}
+
 public extension GeometryProxy {
-    
+
     /// A method that returns a value relative to the scroll offset. It is a value between 0 and 1.
     ///
     /// - Parameters:
     ///   - axes: The scroll view's scrollable axis. The default axis is the vertical axis.
     func scrollerValue(_ axes: Axis.Set = .vertical) -> CGFloat {
-        var value: CGFloat = 0
+        let origin = self.frame(in: .named("Scroller")).origin
+        let value: CGFloat
         if axes == .vertical {
-            value = (self.frame(in: .named("Scroller")).origin.y / self.size.height) * -1
-        }else {
-            value = (self.frame(in: .named("Scroller")).origin.x / self.size.width) * -1
+            value = -origin.y / self.size.height
+        } else {
+            value = -origin.x / self.size.width
         }
-        value = max(value, 0)
-        value = min(value, 1)
-        return value
+        return value.clamped(to: 0...1)
     }
 }

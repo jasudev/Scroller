@@ -25,40 +25,52 @@
 
 import SwiftUI
 
+extension View {
+    func frame(
+        size: CGSize,
+        alignment: Alignment = .center
+    ) -> some View {
+        self.frame(
+            width: size.width,
+            height: size.height,
+            alignment: alignment
+        )
+    }
+}
+
 public struct Scroller<Content, LastContent>: View where Content: View, LastContent: View {
-    
+
     /// The scroll view's scrollable axis. The default axis is the vertical axis.
     private var axes: Axis.Set = .vertical
-    
+
     /// A Boolean value that indicates whether the scroll
     /// view displays the scrollable component of the content offset, in a way
     /// suitable for the platform. The default value for this parameter is `true`.
     private var showsIndicators: Bool = true
-    
+
     /// Bind the full scroll relative value. It is a value between 0 and 1.
     @Binding private var value: CGFloat
-    
+
     /// The view builder that creates the scrollable view, Pass a view that conforms to ScrollerContent.
     @ViewBuilder private var content: () -> Content
-    
+
     /// Pass the last view. default is a blank screen.
-    private var lastContent: (() -> LastContent?)? = nil
-    
+    private var lastContent: (() -> LastContent?)?
+
     public var body: some View {
         GeometryReader { proxy in
             ScrollView(axes, showsIndicators: showsIndicators) {
                 ZStack {
                     LazyStack(axes) {
-                        content()
-                            .frame(width: proxy.size.width, height: proxy.size.height)
+                        content().frame(size: proxy.size)
                         ZStack {
-                            if lastContent != nil {
-                                lastContent?()
-                            }else {
+                            if let content = lastContent {
+                                content()
+                            } else {
                                 Rectangle().fill(Color.clear)
                             }
                         }
-                        .frame(width: proxy.size.width, height: proxy.size.height)
+                        .frame(size: proxy.size)
                     }
                     OffsetScrollView()
                 }
@@ -69,7 +81,7 @@ public struct Scroller<Content, LastContent>: View where Content: View, LastCont
     }
 }
 
-public extension Scroller where Content : View, LastContent == EmptyView {
+public extension Scroller where Content: View, LastContent == EmptyView {
     /// Initializes `Scroller`
     ///
     /// - Parameters:
@@ -79,14 +91,19 @@ public extension Scroller where Content : View, LastContent == EmptyView {
     ///     suitable for the platform. The default value for this parameter is `true`.
     ///   - value: Bind the full scroll relative value. It is a value between 0 and 1.
     ///   - content: The view builder that creates the scrollable view, Pass a view that conforms to ScrollerContent.
-    init(_ axes: Axis.Set, showsIndicators: Bool = true, value: Binding<CGFloat>, @ViewBuilder content: @escaping () -> Content) {
+    init(
+        _ axes: Axis.Set,
+        showsIndicators: Bool = true,
+        value: Binding<CGFloat>,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
         self.axes = axes
-        _value = value
+        self._value = value
         self.content = content
     }
 }
 
-public extension Scroller where Content : View, LastContent : View {
+public extension Scroller where Content: View, LastContent: View {
     /// Initializes `Scroller`
     ///
     /// - Parameters:
@@ -97,9 +114,15 @@ public extension Scroller where Content : View, LastContent : View {
     ///   - value: Bind the full scroll relative value. It is a value between 0 and 1.
     ///   - content: The view builder that creates the scrollable view, Pass a view that conforms to ScrollerContent.
     ///   - lastContent: Pass the last view. default is a blank screen.
-    init(_ axes: Axis.Set, showsIndicators: Bool = true, value: Binding<CGFloat>, @ViewBuilder content: @escaping () -> Content, @ViewBuilder lastContent: @escaping () -> LastContent) {
+    init(
+        _ axes: Axis.Set,
+        showsIndicators: Bool = true,
+        value: Binding<CGFloat>,
+        @ViewBuilder content: @escaping () -> Content,
+        @ViewBuilder lastContent: @escaping () -> LastContent
+    ) {
         self.axes = axes
-        _value = value
+        self._value = value
         self.content = content
         self.lastContent = lastContent
     }
